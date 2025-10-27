@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة عقد قران</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lateef&family=Scheherazade+New&family=El+Messiri&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'El Messiri', sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            color: #5d4037;
+            overflow-x: hidden;
+            line-height: 1.8;
+        }
+
+        .invitation-container {
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(188, 71, 123, 0.2);
+            background: #fff;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+        /* Opening Section */
+        .opening-section {
+            height: 100vh;
+            background: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><path fill="%23f8bbd9" d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z"/></svg>');
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .mainmsg {
+            /* font-family: 'Lateef', cursive; */
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #7c0e3a;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .names {
+            font-family: 'Lateef', cursive;
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #c2185b;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 0.3s;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .date {
+            font-family: 'Scheherazade New', serif;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #d81b60;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 0.6s;
+        }
+
+        .open-invitation {
+            background: linear-gradient(to right, #c2185b, #d81b60);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'El Messiri', sans-serif;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease 0.9s;
+            box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+        }
+
+        .open-invitation:hover {
+            background: linear-gradient(to right, #ad1457, #c2185b);
+            transform: scale(1.05);
+        }
+
+        /* Main Invitation */
+        .main-invitation {
+            display: none;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Lateef', cursive;
+            font-size: 4rem;
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            color: #d81b60;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .decorative-divider {
+            height: 2px;
+            width: 150px;
+            background: linear-gradient(to right, transparent, #c2185b, transparent);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .decorative-divider:before,
+        .decorative-divider:after {
+            content: '✿';
+            position: absolute;
+            top: -12px;
+            color: #c2185b;
+            font-size: 1.5rem;
+        }
+
+        .decorative-divider:before {
+            right: 20px;
+        }
+
+        .decorative-divider:after {
+            left: 20px;
+        }
+
+        /* Details Section */
+        .details-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .detail-card {
+            flex: 1;
+            min-width: 250px;
+            background: #fce4ec;
+            padding: 25px;
+            margin: 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #f8bbd9;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(194, 24, 91, 0.15);
+        }
+
+        .detail-card h3 {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .detail-card p {
+            margin-bottom: 10px;
+            color: #5d4037;
+            font-size: 1.2rem;
+        }
+
+        /* Countdown */
+        .countdown-section {
+            text-align: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border-radius: 15px;
+            border: 1px solid #f8bbd9;
+        }
+
+        .countdown-title {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 90px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f8bbd9;
+        }
+
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #c2185b;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: #d81b60;
+            margin-top: 5px;
+        }
+
+        /* RSVP Section */
+        .rsvp-section {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+            border: 1px solid #f8bbd9;
+        }
+
+        .rsvp-title {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .rsvp-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5d4037;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #f8bbd9;
+            border-radius: 8px;
+            font-family: 'El Messiri', sans-serif;
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #c2185b, #d81b60);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'El Messiri', sans-serif;
+            box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+            font-weight: bold;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #ad1457, #c2185b);
+            transform: scale(1.05);
+        }
+
+        /* Confirmation Message */
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #fce4ec;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #f8bbd9;
+        }
+
+        .confirmation h3 {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .confirmation p {
+            font-size: 1.2rem;
+            color: #5d4037;
+        }
+
+        /* Floating Elements */
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #c2185b;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Arabic Styling */
+        .arabic-text {
+            font-family: 'Scheherazade New', serif;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .names {
+                font-size: 3.5rem;
+            }
+            
+            .detail-card {
+                min-width: 100%;
+            }
+            
+            .countdown-container {
+                flex-wrap: wrap;
+            }
+            
+            .header h1 {
+                font-size: 3rem;
+            }
+        }
+        .suggestion-section a {
+            font-size: 1.2rem;
+            color: #5d4037;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .suggestion-section a:hover {
+            color: #c2185b;
+        }
+        .suggestion-section button {
+            font-size: 1.2rem; /* Adjust the font size as needed */
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .suggestion-section button:hover {
+            color: #fce7f0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="invitation-container">
+        <!-- Opening Section -->
+        <section class="opening-section" id="opening">
+            <h1 class="mainmsg">دعوة حضور عقد قران</h1>
+            <h1 class="names">محمود وسمية</h1>
+            <p class="date">21 نوفمبر 2025</p>
+            <button class="open-invitation" id="openBtn">افتح الدعوة</button>
+            
+            <!-- Floating hearts -->
+            <div class="floating-heart" style="top: 20%; right: 10%;">❤</div>
+            <div class="floating-heart" style="top: 60%; left: 10%;">❤</div>
+            <div class="floating-heart" style="top: 80%; right: 15%;">❤</div>
+            <div class="floating-heart" style="top: 30%; left: 15%;">❤</div>
+        </section>
+
+        <!-- Main Invitation Content -->
+        <section class="main-invitation" id="mainInvitation">
+            <div class="header">
+                <p class="arabic-text">بسم الله الرحمن الرحيم</p>
+                <h1>دعوة عقد قران</h1>
+                <!-- <p class="arabic-text">د محمود و أ سمية</p> -->
+                <div class="decorative-divider"></div>
+                <p class="arabic-text">يسرنا دعوتكم لحضور حفل عقد قراننا (محمود وسمية)</p>
+            </div>
+
+            <div class="details-section">
+                <div class="detail-card">
+                    <h3 class="arabic-text">التاريخ والوقت</h3>
+                    <p class="arabic-text">الجمعة، ٢١ نوفمبر ٢٠٢٥</p>
+                    <!-- <p class="arabic-text">الحفل: ٣:٠٠ مساءً</p> -->
+                    <p class="arabic-text">الموعد: ٥:٠٠ مساءً</p>
+                </div>
+                <div class="detail-card">
+                    <h3 class="arabic-text">المكان</h3>
+                    <p class="arabic-text">قاعة الياسمين</p>
+                    <p class="arabic-text">نادي شركة مدينة نصر للإسكان والتعمير</p>
+                    <p class="arabic-text">المنطقة التاسعة، مدينة نصر</p>
+                </div>
+                <div class="detail-card">
+                    <h3 class="arabic-text">رسالة من العروسين</h3>
+                    <p class="arabic-text">نحن محمود وسمية</p>
+                    <p class="arabic-text">نرحب ونسعد بحضوركم ولكننا نستأذنكم فى عدم التصوير نهائيًا (صور او فيديوهات)، لأن العروسة منتقبة ونحن لا نأذن بذلك، وشكرًا لتفهمكم</p>
+                </div>
+            </div>
+
+            <div class="countdown-section">
+                <h2 class="countdown-title arabic-text">العد التنازلي ليومنا الخاص</h2>
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">٠٠</div>
+                        <div class="countdown-label arabic-text">أيام</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">٠٠</div>
+                        <div class="countdown-label arabic-text">ساعات</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">٠٠</div>
+                        <div class="countdown-label arabic-text">دقائق</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">٠٠</div>
+                        <div class="countdown-label arabic-text">ثواني</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rsvp-section">
+                <h2 class="rsvp-title arabic-text">تأكيد الحضور </h2>
+                <p class="arabic-text">الرجاء تأكيد الحضور قبل ١٥ نوفمبر ٢٠٢٥</p>
+                <form class="rsvp-form" id="rsvpForm">
+                    <div class="form-group">
+                        <label for="name" class="arabic-text">الاسم </label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="arabic-text">رقم الهاتف</label>
+                        <input type="tel" id="phone" required>
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="guests" class="arabic-text">عدد الضيوف</label>
+                        <select id="guests" required>
+                            <option value="" disabled selected>اختر العدد</option>
+                            <option value="1">١</option>
+                            <option value="2">٢</option>
+                            <option value="3">٣</option>
+                            <option value="4">٤</option>
+                            <option value="5">٥</option>
+                            <option value="6">٦</option>
+                            <option value="7">٧</option>
+                        </select>
+                    </div> -->
+                    <div class="form-group">
+                        <!-- <label for="attending" class="arabic-text">هل ستشاركنا فرحتنا؟</label>
+                        <select id="attending" required>
+                            <option value="" disabled selected>الرجاء الاختيار</option>
+                            <option value="yes">نعم، سأكون هناك!</option>
+                            <option value="no">آسف، لا أستطيع الحضور</option>
+                        </select> -->
+                    </div>
+                    <button type="submit" class="submit-btn arabic-text" id="submitBtn">تأكيد الحضور</button>
+                    <div id="loading" style="display:none; margin-top:10px;" class="arabic-text">جاري الإرسال...</div>
+                    <div id="errorMessage" style="display:none; margin-top:10px; color:red;" class="arabic-text"></div>
+                </form>
+                <div class="confirmation" id="confirmation">
+                    <h3 class="arabic-text">شكراً لك!</h3>
+                    <p class="arabic-text">   نتطلع للاحتفال معك!</p>
+                </div>
+            </div>
+            <div class="suggestion-section" style="text-align: center; margin-top: 30px;">
+                <h3 style="font-weight: bold;">هل لديك اقتراحات لتحسين التصميم؟</h3>
+                
+                <button class="submit-btn arabic-text" onclick="opensuggest()">نعم لدى اقتراحات</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        //const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw6u4iwQ_5d8XtSob_FFMkzIg7VqETH54f-V390zwsRUHFWY74Be0ufAYhRVVkGHsn1/exec';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0Pm--O6ZK1UWHsBxRgJeYmUSB59uXUVHlq90nhTBojxPo3EfxDRo-nwyh5CEzzY9e/exec';
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate opening elements
+            setTimeout(function() {
+                document.querySelector('.mainmsg').classList.add('fade-in');
+                document.querySelector('.names').classList.add('fade-in');
+                document.querySelector('.date').classList.add('fade-in');
+                document.querySelector('.open-invitation').classList.add('fade-in');
+            }, 500);
+
+            // Open invitation button
+                document.getElementById('openBtn').addEventListener('click', function() {
+                document.getElementById('opening').style.display = 'none';
+                document.getElementById('mainInvitation').style.display = 'block';
+                
+                // Animate floating hearts
+                animateHearts();
+            });
+
+            // Countdown timer
+            function updateCountdown() {
+                const weddingDate = new Date('November 21, 2025 17:00:00').getTime();
+                const now = new Date().getTime();
+                const timeLeft = weddingDate - now;
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                // Convert to Arabic numerals
+                document.getElementById('days').textContent = toArabicNumerals(days.toString().padStart(2, '0'));
+                document.getElementById('hours').textContent = toArabicNumerals(hours.toString().padStart(2, '0'));
+                document.getElementById('minutes').textContent = toArabicNumerals(minutes.toString().padStart(2, '0'));
+                document.getElementById('seconds').textContent = toArabicNumerals(seconds.toString().padStart(2, '0'));
+            }
+
+            // Convert numbers to Arabic numerals
+            function toArabicNumerals(number) {
+                const arabicNumerals = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+                return number.toString().replace(/\d/g, digit => arabicNumerals[digit]);
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            // RSVP form submission
+            // document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            //     e.preventDefault();
+            //     document.getElementById('rsvpForm').style.display = 'none';
+            //     document.getElementById('confirmation').style.display = 'block';
+            // });
+            document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const loading = document.getElementById('loading');
+                const errorMessage = document.getElementById('errorMessage');
+                
+                // Show loading, hide error
+                submitBtn.disabled = true;
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    // guests: document.getElementById('guests').value,
+                    // attending: document.getElementById('attending').value,
+                    timestamp: new Date().toLocaleString()
+                };
+                
+                try {
+                    // Send data to Google Sheets via Google Apps Script
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    // console.log(response); 
+                    // console.log('Data sent:', formData); 
+                    if (response.ok) {
+                        // Success - show confirmation
+                        document.getElementById('rsvpForm').style.display = 'none';
+                        document.getElementById('confirmation').style.display = 'block';
+                    } else {
+                        throw new Error('فشل في إرسال البيانات');
+                    }
+                } catch (error) {
+                    // Show error message
+                    // errorMessage.textContent = 'حدث خطأ أثناء إرسال البيانات. الرجاء المحاولة مرة أخرى.';
+                    // errorMessage.style.display = 'block';
+                    // submitBtn.disabled = false;
+                    document.getElementById('rsvpForm').style.display = 'none';
+                    document.getElementById('confirmation').style.display = 'block';
+                } finally {
+                    loading.style.display = 'none';
+                }
+            });
+            // Floating hearts animation
+            function animateHearts() {
+                const hearts = document.querySelectorAll('.floating-heart');
+                hearts.forEach(heart => {
+                    // Random movement
+                    const randomX = (Math.random() - 0.5) * 20;
+                    const randomY = (Math.random() - 0.5) * 20;
+                    
+                    heart.style.transition = 'all 3s ease-in-out';
+                    heart.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                    
+                    // Continuous animation
+                    setInterval(() => {
+                        const newX = (Math.random() - 0.5) * 20;
+                        const newY = (Math.random() - 0.5) * 20;
+                        heart.style.transform = `translate(${newX}px, ${newY}px)`;
+                    }, 1900);
+                });
+            }
+            animateHearts()
+        });
+        
+        opensuggest = function() {
+            window.open('suggestions.html', '_blank');
+        }
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Disable specific key combinations
+document.addEventListener('keydown', function (event) {
+    // F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + I (Inspect)
+    if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + J (Console)
+    if (event.ctrlKey && event.shiftKey && event.key === 'J') {
+        event.preventDefault();
+    }
+
+    // Ctrl + U (View Source)
+    if (event.ctrlKey && event.key === 'u') {
+        event.preventDefault();
+    }
+
+    // Ctrl + S (Save page)
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+    }
+
+    // Ctrl + C (Copy)
+    if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault();
+    }
+
+    // Ctrl + P (Print)
+    if (event.ctrlKey && event.key === 'p') {
+        event.preventDefault();
+    }
+});
+    </script>
+</body>
+</html>

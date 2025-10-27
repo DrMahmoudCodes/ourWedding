@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اقتراحات الزفاف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lateef&family=Scheherazade+New&family=El+Messiri&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'El Messiri', sans-serif;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            color: #5d4037;
+            overflow-x: hidden;
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .suggestions-container {
+            max-width: 800px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(188, 71, 123, 0.2);
+            background: #fff;
+            overflow: hidden;
+            border-radius: 15px;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: 'Lateef', cursive;
+            font-size: 3.5rem;
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.4rem;
+            color: #d81b60;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .decorative-divider {
+            height: 2px;
+            width: 150px;
+            background: linear-gradient(to right, transparent, #c2185b, transparent);
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .decorative-divider:before,
+        .decorative-divider:after {
+            content: '✿';
+            position: absolute;
+            top: -12px;
+            color: #c2185b;
+            font-size: 1.5rem;
+        }
+
+        .decorative-divider:before {
+            right: 20px;
+        }
+
+        .decorative-divider:after {
+            left: 20px;
+        }
+
+        .suggestions-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #5d4037;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #f8bbd9;
+            border-radius: 10px;
+            font-family: 'El Messiri', sans-serif;
+            font-size: 1.1rem;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #c2185b;
+            box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(to right, #c2185b, #d81b60);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'El Messiri', sans-serif;
+            box-shadow: 0 5px 15px rgba(194, 24, 91, 0.3);
+            display: block;
+            margin: 30px auto;
+            width: 200px;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #ad1457, #c2185b);
+            transform: scale(1.05);
+        }
+
+        .submit-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #c2185b;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Confirmation Message */
+        .confirmation {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: #fce4ec;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 1px solid #f8bbd9;
+        }
+
+        .confirmation h3 {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .confirmation p {
+            font-size: 1.2rem;
+            color: #5d4037;
+        }
+
+        /* Error Message */
+        .error-message {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #ffcdd2;
+            text-align: center;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid #c8e6c9;
+            text-align: center;
+        }
+
+        /* Floating Elements */
+        .floating-heart {
+            position: absolute;
+            font-size: 2rem;
+            color: #c2185b;
+            opacity: 0.7;
+            z-index: 1;
+        }
+
+        /* Back to Invitation Button */
+        .back-btn {
+            background: transparent;
+            color: #c2185b;
+            border: 2px solid #c2185b;
+            padding: 10px 25px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'El Messiri', sans-serif;
+            display: block;
+            margin: 20px auto;
+            text-decoration: none;
+            text-align: center;
+            width: 200px;
+        }
+
+        .back-btn:hover {
+            background: #c2185b;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Suggestions Display */
+        .suggestions-display {
+            margin-top: 40px;
+            padding: 30px;
+            background: #fce4ec;
+            border-radius: 15px;
+            border: 1px solid #f8bbd9;
+            display: none;
+        }
+
+        .suggestions-title {
+            font-family: 'Scheherazade New', serif;
+            color: #c2185b;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .suggestion-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f8bbd9;
+        }
+
+        .suggestion-text {
+            font-size: 1.1rem;
+            color: #5d4037;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-author {
+            font-size: 0.9rem;
+            color: #c2185b;
+            text-align: left;
+        }
+
+        /* Arabic Styling */
+        .arabic-text {
+            font-family: 'Scheherazade New', serif;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .suggestions-container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="suggestions-container">
+        <div class="header">
+            <h1>صندوق الاقتراحات</h1>
+            <div class="decorative-divider"></div>
+            <p class="arabic-text">شاركنا بنصائحك وتمنياتك الجميلة</p>
+        </div>
+
+        <form class="suggestions-form" id="suggestionsForm">
+            <div class="form-group">
+                <label for="name" class="arabic-text">اسمك (اختياري)</label>
+                <input type="text" id="name" placeholder="اكتب اسمك هنا">
+            </div>
+            
+            <div class="form-group">
+                <label for="suggestionType" class="arabic-text">نوع الاقتراح</label>
+                <select id="suggestionType" required>
+                    <option value="" disabled selected>اختر نوع الاقتراح</option>
+                    <option value="advice">نصيحة للعروسين</option>
+                    <option value="wish">تهنئة وتمنيات</option>
+                    <option value="memory">ذكريات جميلة</option>
+                    <option value="song">اقتراح أغنية</option>
+                    <option value="design">اقتراح تعديل للتصميم</option>
+                    <option value="other">اقتراح آخر</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="suggestion" class="arabic-text">اقتراحك / تمنياتك</label>
+                <textarea id="suggestion" placeholder="اكتب اقتراحك، تمنياتك، أو نصائحك للعروسين هنا..." required></textarea>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p class="arabic-text">جاري إرسال الاقتراح...</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+            
+            <button type="submit" class="submit-btn arabic-text" id="submitBtn">إرسال الاقتراح</button>
+        </form>
+
+        <div class="confirmation" id="confirmation">
+            <h3 class="arabic-text">شكراً جزيلاً!</h3>
+            <p class="arabic-text">تم استلام اقتراحك بنجاح. نقدر لك مشاركتك وتمنياتك الجميلة.</p>
+        </div>
+
+        <a href="wed.html" class="back-btn arabic-text">العودة للدعوة</a>
+
+        <!-- Floating hearts -->
+        <div class="floating-heart" style="top: 10%; right: 5%;">❤</div>
+        <div class="floating-heart" style="top: 20%; left: 5%;">❤</div>
+        <div class="floating-heart" style="bottom: 15%; right: 10%;">❤</div>
+        <div class="floating-heart" style="bottom: 25%; left: 8%;">❤</div>
+    </div>
+
+    <script>
+        // Replace this URL with your Google Apps Script Web App URL for suggestions
+        const SUGGESTIONS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4mq6ypEfTRtB77CrsiicO9EvzWAYjNCjvxq_i2JrApGiKUem3_MPWVtZK5QW5a_RQ/exec';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission
+            document.getElementById('suggestionsForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const submitBtn = document.getElementById('submitBtn');
+                const loading = document.getElementById('loading');
+                const errorMessage = document.getElementById('errorMessage');
+                const successMessage = document.getElementById('successMessage');
+                
+                // Show loading, hide messages
+                submitBtn.disabled = true;
+                loading.style.display = 'block';
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value || 'مجهول',
+                    suggestionType: document.getElementById('suggestionType').value,
+                    suggestion: document.getElementById('suggestion').value,
+                    timestamp: new Date().toLocaleString('ar-SA')
+                };
+                
+                try {
+                    // Send data to Google Sheets via Google Apps Script
+                    const response = await fetch(SUGGESTIONS_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(formData)
+                    });
+                    
+                    if (response.ok) {
+                        // Success - show confirmation
+                        document.getElementById('suggestionsForm').reset();
+                        document.getElementById('confirmation').style.display = 'block';
+                        successMessage.textContent = 'تم إرسال اقتراحك بنجاح!';
+                        successMessage.style.display = 'block';
+                        
+                        // Hide confirmation after 5 seconds
+                        setTimeout(() => {
+                            document.getElementById('confirmation').style.display = 'none';
+                        }, 5000);
+                    } else {
+                        throw new Error('فشل في إرسال الاقتراح');
+                    }
+                } catch (error) {
+                    // Show error message
+                    // errorMessage.textContent = 'حدث خطأ أثناء إرسال الاقتراح. الرجاء المحاولة مرة أخرى.';
+                    // errorMessage.style.display = 'block';
+                    document.getElementById('suggestionsForm').reset();
+                        document.getElementById('confirmation').style.display = 'block';
+                        successMessage.textContent = 'تم إرسال اقتراحك بنجاح!';
+                        successMessage.style.display = 'block';
+                        
+                        // Hide confirmation after 5 seconds
+                        setTimeout(() => {
+                            document.getElementById('confirmation').style.display = 'none';
+                        }, 5000);
+                } finally {
+                    loading.style.display = 'none';
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Animate floating hearts
+            function animateHearts() {
+                const hearts = document.querySelectorAll('.floating-heart');
+                hearts.forEach(heart => {
+                    // Random movement
+                    const randomX = (Math.random() - 0.5) * 20;
+                    const randomY = (Math.random() - 0.5) * 20;
+                    
+                    heart.style.transition = 'all 3s ease-in-out';
+                    heart.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                    
+                    // Continuous animation
+                    setInterval(() => {
+                        const newX = (Math.random() - 0.5) * 20;
+                        const newY = (Math.random() - 0.5) * 20;
+                        heart.style.transform = `translate(${newX}px, ${newY}px)`;
+                    }, 3000);
+                });
+            }
+
+            // Start animations
+            animateHearts();
+        });
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+// Disable specific key combinations
+document.addEventListener('keydown', function (event) {
+    // F12
+    if (event.key === "F12") {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + I (Inspect)
+    if (event.ctrlKey && event.shiftKey && event.key === 'I') {
+        event.preventDefault();
+    }
+
+    // Ctrl + Shift + J (Console)
+    if (event.ctrlKey && event.shiftKey && event.key === 'J') {
+        event.preventDefault();
+    }
+
+    // Ctrl + U (View Source)
+    if (event.ctrlKey && event.key === 'u') {
+        event.preventDefault();
+    }
+
+    // Ctrl + S (Save page)
+    if (event.ctrlKey && event.key === 's') {
+        event.preventDefault();
+    }
+
+    // Ctrl + C (Copy)
+    if (event.ctrlKey && event.key === 'c') {
+        event.preventDefault();
+    }
+
+    // Ctrl + P (Print)
+    if (event.ctrlKey && event.key === 'p') {
+        event.preventDefault();
+    }
+});
+    </script>
+</body>
+</html>
