@@ -503,6 +503,64 @@ document.addEventListener('keydown', function (event) {
         event.preventDefault();
     }
 });
+(async () => {
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxxqUAY8ci43WPFV40_j0Zg-TaA-wud6dPNEuYG8ygKyzXWHKGLLPQwblQtBP3BzJJO5w/exec"; // Paste your Apps Script Web App URL
+
+  // Track number of visits in this browser
+  let visits = localStorage.getItem("page_visits");
+  visits = visits ? parseInt(visits) + 1 : 1;
+  localStorage.setItem("page_visits", visits);
+    // const ipData = "unknown"
+  // Get public IP and location info
+//   const ipData = await fetch("https://ipapi.co/json/").then(r => r.json()).catch(() => ({}));
+
+  // Parse browser, OS, and device from user agent
+  const ua = navigator.userAgent;
+
+  function detectBrowser() {
+    if (ua.includes("Chrome") && !ua.includes("Edg")) return "Chrome";
+    if (ua.includes("Edg")) return "Edge";
+    if (ua.includes("Firefox")) return "Firefox";
+    if (ua.includes("Safari") && !ua.includes("Chrome")) return "Safari";
+    if (ua.includes("OPR") || ua.includes("Opera")) return "Opera";
+    return "Unknown";
+  }
+
+  function detectOS() {
+    if (ua.includes("Win")) return "Windows";
+    if (ua.includes("Mac")) return "MacOS";
+    if (ua.includes("Linux")) return "Linux";
+    if (/Android/i.test(ua)) return "Android";
+    if (/iPhone|iPad|iPod/i.test(ua)) return "iOS";
+    return "Unknown";
+  }
+
+  function detectDevice() {
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(ua)) return "Mobile";
+    return "Desktop";
+  }
+
+  const payload = {
+    ip: "Unknown",
+    country: "Unknown",
+    city: "Unknown",
+    browser: detectBrowser(),
+    os: detectOS(),
+    device: detectDevice(),
+    userAgent: ua,
+    page: window.location.href,
+    visits: visits,
+    page: window.location.href
+  };
+console.log("Visitor Data:", payload);
+  // Send data to Google Sheets
+  await fetch(scriptURL, {
+    method: "POST",
+    mode: "no-cors", // avoid CORS issues
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  });
+})();
     </script>
 </body>
 </html>
