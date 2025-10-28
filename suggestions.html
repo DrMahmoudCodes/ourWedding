@@ -504,7 +504,7 @@ document.addEventListener('keydown', function (event) {
     }
 });
 (async () => {
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxxqUAY8ci43WPFV40_j0Zg-TaA-wud6dPNEuYG8ygKyzXWHKGLLPQwblQtBP3BzJJO5w/exec"; // Paste your Apps Script Web App URL
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyvL3bQqXVWERTC_9cJ9fVIJqr3hcAwa9v3sspZ8jZzmQFbvNTpuxNB_krN5lYxUDpq6g/exec"; // Paste your Apps Script Web App URL
 
   // Track number of visits in this browser
   let visits = localStorage.getItem("page_visits");
@@ -550,7 +550,7 @@ document.addEventListener('keydown', function (event) {
     userAgent: ua,
     page: window.location.href,
     visits: visits,
-    page: window.location.href
+    pageName: "Suggestions Page"
   };
 console.log("Visitor Data:", payload);
   // Send data to Google Sheets
